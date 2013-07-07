@@ -1,0 +1,336 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{João Lucas Pereira de Santana}
+\bibliographystyle{plain}
+
+\addtolength{\hoffset}{-1.0cm}
+\addtolength{\voffset}{-2.0cm}
+\setlength{\textheight}{22 cm}
+\setlength{\textwidth}{13 cm}
+
+\begin{document}
+\author{Jo\~{a}o Lucas Pereira de Santana - 20071230}
+\title{Equival\^{e}ncia entre M\'aquina de Wang-Post e M\'aquina de Turing}
+\date{Teoria Da Computa\c{c}\~{a}o - 2009/1}
+\maketitle
+
+
+
+\section{Apresenta\c{c}\~{a}o da M\'aquina}
+
+Considere uma m\'aquina fict\'icia B com as seguintes caracter\'isticas:
+\begin{itemize}
+\item Armazenamento interno ilimitado.
+\item Fita de armazenamento serial dividida em c\'elulas (\textit{square}) que se extende em ambas dire\c{c}\~{o}es.
+\item Elemento controlador.
+\item Cabe\c{c}a de leitura e escrita que em um dado momento scanea um, e somente um \textit{square} da fita
+\item[-] A cabe\c{c}a de leitura pode mover para esquerda, direita, ou marcar o \textit{square} scaneado. Pode ainda ir para outro \textit{square} se o \textit{square} atualmente scaneado est\'a marcado ou n\~{a}o.
+\end{itemize}
+
+A cada momento, a pr\'oxima instru\c{c}ao da m\'aquina \'e determinada pelo passo atual do programa juntamente com o conte\'udo da c\'elula scaneada.\\
+
+S\~{a}o poss\'iveis 4 tipos de opera\c{c}\~{o}es na fita:
+\begin{itemize}
+\item $\rightarrow$ Cabe\c{c}a de leitura move um \textit{square} para a direita.
+\item $\leftarrow$ Cabe\c{c}a de leitura move um \textit{square} para a esquerda.
+\item $*$ : Marca a posi\c{c}\~{a}o atual.
+\item C$n$ : Elemento controlador pula para outro passo do programa.
+\end{itemize}
+
+Exemplo de programa para parar no \textit{square} branco mais pr\'oximo \`a direita do \textit{square} incialmente scaneado:
+
+$$
+1.*,\ 2.\rightarrow,\ 3.C2,\ 4.\rightarrow,\ 5.\leftarrow
+$$
+
+Um programa em uma m\'aquina B, doravante \textit{B-Machine}, poder ser considerado como um conjunto de pares ordenados tal que existe um inteiro positivo $k (k>2)$ para o qual:
+
+\begin{description}
+\item[(a)] para cada $n$, $n$ ocorre no primeiro membro se, e somente se, $1 \le n \le k$;
+\item[(b)] o segundo membro de cada par \'e $*$, ou $\rightarrow$, ou $\leftarrow$, ou $Cn$, com $1 \le n \le k-1$;
+\item[(c)] existem os pares $\{\langle k-1, \rightarrow \rangle, \langle k, \leftarrow \rangle\}$;
+\end{description}
+
+De acordo com a defini\c{c}\~{a}o anterior, o exemplo pode ser representado por:
+$$
+\{\langle 1,* \rangle, \langle 2,\rightarrow \rangle\, \langle 3,2 \rangle, \langle 4,\rightarrow \rangle \langle 5,\leftarrow \rangle\}
+$$
+
+\section{Todas as fun\c{c}\~{o}es comput\'aveis por uma \textit{B-Machine} s\~{a}o recursivas}
+
+Para simplificar as considera\c{c}\~{o}es, \'e assumido o seguinte:
+\begin{description}
+\item[i)] A entrada inicial da fita cont\'em um finito n\'umero de \textit{square} marcados;
+\item[ii)] No inicio de cada programa, a cabe\c{c}a de leitura scanea o sexto \textit{square} branco \`a direta do \textit{square} mais \`a direta marcado.
+\end{description}
+
+Por outro lado, subrotinas come\c{c}am em qualquer posi\c{c}\~{a}o dentro da por\c{c}\~{a}o contendo marca\c{c}\~{o}es mais os seis brancos, e terminam similarmente.
+
+De i) segue que a cada momento, existem finitos \textit{square} marcados na fita.\newline
+
+Para um programa $\Pi$, sua configura\c{c}\~{a}o a cada momento \'e dada por:
+\begin{description}
+\item[a)] Conte\'udo da fita;
+\item[b)] A posi\c{c}\~{a}o e o conte\'udo do \textit{square} scaneado;
+\item[c)] Instru\c{c}\~{a}o do programa que est\'a sendo executada.
+\end{description}
+
+Esses 3 fatos somados ao programa determinam o \textit{Complete Stantaneous State} de uma \textit{B-Machine}, daqui para frente, Configura\c{c}\~{a}o da \textit{B-Machine}.
+Esta configura\c{c}\~{a}o pode ser representada por n\'umeros da seguinte forma:\\
+$\rightarrow$ por $1$;\\
+$\leftarrow$ por $2$;\\
+$*$ por $3$\\
+$n$ por $n + 3$.\\
+
+Com esta conven\c{c}\~{a}o, o exemplo $\{\langle 1,* \rangle, \langle 2,\rightarrow \rangle\, \langle 3,2 \rangle, \langle 4,\rightarrow \rangle \langle 5,\leftarrow \rangle\}$ pode ser representado por:
+$$
+2^3 \cdot 3^1 \cdot 5^5 \cdot 7^1 \cdot 11^2
+$$
+$lh(\pi)$ \'e o comprimento de $\Pi$.\\
+$(\pi)_i$ \'e o expoente do $i$-\'esimo primo na fatora\c{c}\~{a}o de $\Pi$\\
+Onde $lh(\pi)$ e $(\pi)_i$ s\~{a}o fun\c{c}\~{o}es recursivas (Kleene \cite{Kleene})
+
+O conte\'udo da fita e o \textit{square} scaneado podem ser representados por um n\'umero na forma $$3^a \cdot 3^b \cdot 7^c$$ onde $b = 0$ ou $1$ se o \textit{square} scaneado est\'a branco ou marcado, respectivamente.
+$a$ e $c$ representam, respectivamente, o conte\'udo da fita \`a esqueda e \`a direita do \textit{square} scaneado, de forma que o $i$-\'esimo digito (da direita para esquerda) de $a$ (resp. $c$) \'e $0$ ou $1$ dependendo se o $i$\'esimo \textit{square} \`a esquerda (resp. direita) \'e branco ou marcado. Se, por exemplo a por\c{c}\~{a}o marcada da fita \'e
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+$*$ & \ & $*$ & $*$ & \ & \ & $*$ & $*$\\
+\hline
+\end{tabular}
+\end{center}
+
+e a cabe\c{c}a de leitura scanea o quarto (da esquerda para direita) \textit{square}, o n\'umero \'e $ 3^{101} \cdot 5 \cdot 7^{1100} $. Usando esta nota\c{c}\~{a}o, a configura\c{c}\~{a} da fita pode ser representada a cada momento pelo n\'umero $$ 2^{\pi} \cdot 3^{a} \cdot 5^{b} \cdot 7^{c} \cdot 11^i $$ quando o programa tem o n\'umero $\pi$, o conte\'udo da fita com o \textit{square} scaneado o n\'umero $3^a \cdot 3^b \cdot 7^c$, e o passo da execu\c{c}\~{a}o \'e $i$.
+
+Se a \textit{B-Machine} tem a configura\c{c}\~{a}o $ 2^{\pi} \cdot 3^{a} \cdot 5^{b} \cdot 7^{c} \cdot 11^i $, $i < lh(\pi)$, o pr\'oximo passo da execu\c{c}\~{a}o \'e dado por:
+
+\begin{description}
+\item[i)] se $(\pi)_i = 1$, $2^{\pi} \cdot 3^{10a+b} \cdot 5^{c'} \cdot 7^{c/10} \cdot 11^{i+1}$, $c' = c\ mod\ 10$;
+
+\item[ii)] se $(\pi)_i = 2$, $2^{\pi} \cdot 3^{a/10} \cdot 5^{a'} \cdot 7^{10c + b} \cdot 11^{i+1}$, $a' = a\ mod\ 10$;
+
+\item[iii)] se $(\pi)_i = 3$, $2^{\pi} \cdot 3^{a} \cdot 5 \cdot 7^{c} \cdot 11^{i+1}$;
+
+\item[iv)] $(\pi)_i = 3 + j$, $2^{\pi} \cdot 3^{a} \cdot 5^{b} \cdot 7^{c} \cdot 11^{i+1}$ se $b = 0$, e $2^{\pi} \cdot 3^{a} \cdot 5^{b} \cdot 7^{c} \cdot 11^{j}$ se $b = 1$.
+
+\end{description}
+
+Com esta configura\c{c}\~{a}o, quando a \textit{B-Machine} come\c{c}ar a execu\c{c}\~{a}o, todos os outros estados ser\c~{a}o determinados.\\
+
+Desses dados segue que:
+
+$\theta_\pi(\iota, t)$ retorna o n\'umero de configura\c{c}\~{a}o da \textit{B-Machine} no momento $t$, para uma fita com entrada $\iota$.
+
+$\tau_\pi(\iota) = \mu_t[(\theta_\pi(\iota, t))_5 = lh(\pi)]$ retorna o menor n\'umero $t$, tal que, para uma dada entrada $i$, a \textit{B-Machine} estar\'a executando a \'ultima linha do programa $\Pi$ no tempo $t$.
+
+A fun\c{c}\~{a}o recursiva $\theta_\pi(\iota,\tau_\pi(i))/(2^{\pi} \cdot 11^{lh(\pi)})$ \'e a fun\c{c}\~{a}o determinada pelo programa $\Pi$, uma vez que ela retorna para cada entrada $i$, a correspondente sa\'ida que resulta da execu\c{c}\~{a}o do programa $\Pi$
+
+As defini\c{c}\~{o}es expl\'icitas dessas fun\c{c}\~{o}es foram omitidas porque fun\c{c}\~{o}es similares s\~{a}o encontradas em Kleene \cite{Kleene}, pp. 374-376.\\
+
+Disso segue que a fun\c{c}\~{a}o determinada por qualquer programa da \textit{B-Machine} \'e uma fun\c{c}\~{a}o recursiva. Pode-se declarar como resultado dizendo que todas as fun\c{c}\~{o}es comput\'aveis por uma \textit{B-Machine} s\~{a}o recursivas. Isto \'e uma ligeira generaliza\c{c}\~{a}o do conhecido teorema que diz que todas as fun\c{c}\~{o}es Turing comput\'aveis s\~{a}o recursivas (Kleene \cite{Kleene}, p.374). Esta generaliza\c{c}\~{a}o consiste na ren\'uncia da restri\c{c}\~{a}o de que os estados inicial e final da fita devem estar de uma certa forma predefinida, a qual \'e convencionada de acordo com a necessidade, como representa\c{c}\~{a}o positiva de inteiros ou $n$-tuplas de inteiros.
+
+\section{Toda fun\c{c}\~{a}o recursiva \'e B-Comput\'avel}
+
+Para provar que todas as fun\c{c}\~{o}es s\~{a}o recursivas s\~{a}o B-comput\'aveis, ser\'a usada indu\c{c}\~{a}o por consequ\^encia: as fun\c{c}\~{o}es iniciais s\~{a}o B-comput\'aveis, dada uma classe de B-comput\'aveis fun\c{c}\~{o}es, ent\~{a}o fun\c{c}\~{o}es que derivam delas por um esquema de recurs\~{a}o s\~{a}o tamb\'em B-comput\'aveis.
+
+Uma vez que n\~{a}o estamos usando apagar \textit{squares} da fita, chamaremos uma sequ\^encia alternada de P-\textit{squares} (\textit{principal squares}) e outra sequ\^encia de A-\textit{squares} (\textit{auxiliary squares}). Entradas e sa\'idas na fita s\~{a}o determinadas pelo conte\'udo dos P-\textit{squares}.
+
+Para representar um inteiro $n$, ser\'a usada uma \textit{string} de $n$ pares de \textit{squares} (\textit{representa\c{c}\~{a}o num\'erica}), a qual come\c{c}a (esquerda para direita) com um P-\textit{square} e termina com um A-\textit{square} tal que todos os P-\textit{squares} na \textit{string} s\~{a}o marcados e que cada P-\textit{square} que antecede e sucede a \textit{string} s\~{a}o ambos brancos. Um express\~{a}o nem\'erica \'e chamada \textit{clean}  se todos os A-\textit{squares} dela s\~{a}o brancos
+
+Os argumentos $x_1, ... , x_m$ de uma fun\c{c}\~{a}o $f(x_1, ... , x_m)$ ser\~{a}o representados em qualquer lugar da fita da esquerda para a direita, primeiro pelo n\'umero $x_1$, seguido por branco P-\textit{square} e um branco A-\textit{square}, seguido pelo n\'umero $x_2$, etc.
+
+Se $f(x_1, ... , x_m)$ n\~{a}o est\'a definida, a m\'aquina pode nunca parar (circular) ou parar em um ponto quando n\~{a}o h\'a uma express\~{a}o num\'erica na fita tal que todos os \textit{squares} \`a sua direta s\~{a}o brancos.
+
+Condi\c{c}\~{o}es para execu\c{c}\~{a}o do programa:
+\begin{description}
+\item[(a)] n\~{a} h\'a mais do que dois P-\textit{squares} brancos entre duas representa\c{c}\~{o}es num\'ericas,
+\item[(b)] cada P-\textit{square} marcado \'e sempre parte de uma representa\c{c}\~{a}o num\'erica;
+\item[(c)] n\~{a}o h\'a A-\textit{squares} marcados fora da por\c{c}\~{a}o marcada da fita at\'e o momento;\\
+De (a) e (c) segue que a cada esta\'gio da execu\c{c}\~{a}o da m\'aquina, nunca aparecem mais do que 5 \textit{squares} brancos entre dois \textit{squares} marcados.\\
+\textit{big gap} : 5 \textit{squares} brancos entre 2 \textit{squares} marcados.\\
+\textit{gap} : 3 \textit{squares} brancos entre 2 \textit{squares} marcados.
+\item[(d)] para quaisquer valores $x_1, ... , x_m$, ou a m\'aquina nunca para ou para e o conte\'udo final da fita cont\'em uma express\c{c}\~{a}o num\'erica na forma correta;
+\item[(e)] se a m\'aquina para para uma dada entrada $x_1, ... , x_m$, a \'ultima representa\c{c}\~{a}o num\'erica sera \textit{clean} (i.e., sem A-\textit{squares} marcados);
+\item[(f)] na parada, todos os \textit{big gaps} ser\~{a}o eliminados;
+\item[(g)] na parada, a cabe\c{c}a de leitura terminar\'a scaneando o quinto \textit{square} branco \`a direita da \'ultima express\~{a}o num\'erica, isto \'e, o sexto \textit{square} branco ap\'os o \'ultimo \textit{square} marcado (cabe\c{c}a de leitura termina \textit{scaneando a entrada});
+\end{description}
+A condi\c{c}\~{a}o (e) assegura que \'e permitido utilizar o resultado de uma fun\c{c}\~{a}o no c\'alculo de outra fun\c{c}\~{a}o. A condi\c{c}\~{a}o (f) ajuda a localizar a representa\c{c}\~{a}o num\'erica anterior na fita.\\
+
+Subrotina X: Encontra o mais pr\'oximo \textit{square} marcado \`a esquerda do \textit{square} atual, e termina no \textit{square} \`a direita.
+\begin{multline*}
+1.C14,\ 2.\leftarrow,\ 3.C14,\ 4.\leftarrow,\ 5.C14,\ 6.\leftarrow,\ 7.C14,\ 8.\leftarrow,\ 9.C14,\ 10.\leftarrow,\ 11.C14,\ 12.\leftarrow,\nonumber\\ 13.C14,\ 14.\rightarrow,\ 15.\rightarrow,\ 16.\leftarrow.
+\end{multline*}
+
+Subrotina Y: Se a cabe\c{c}a de leitura est\'a na regi\~{a}o que cont\'em todos os \textit{squares} marcados mais os 6 brancos \`a direita do \'ultimo \textit{square} marcado, Y encontra o \'ultimo \textit{square} marcado e termina \textit{scaneando a entrada}
+\begin{multline*}
+1.X,\ 2.\leftarrow,\ 3.\rightarrow,\ 4.C3,\ 5.\rightarrow,\ 6.C3,\ 7.\rightarrow,\ 8.C3,\ 9.\rightarrow,\ 10.C3,\ 11.\rightarrow,\ 12.C3,\ 13.\rightarrow,\nonumber\\ 14.C3,\ 15.\rightarrow,\ 16.\leftarrow.
+\end{multline*}
+
+Subrotina A: Adiciona 1 ao \'ultimo n\'umero na fita.
+$$
+1.Y,\ 2.\leftarrow^4,\ 3.*,\ 4.\rightarrow,\ 5.\leftarrow.
+$$
+ou simplesmente
+$$
+Y,\ \leftarrow^4,\ *,
+$$
+($\leftarrow^n$ significa $\leftarrow$ repetido $n$ vezes.)\\
+
+Subrotina H: Encontra o mais pr\'oximo \textit{big gap} \`a esquerda do \textit{square} scaneado e termina lendo o \textit{square} do meio do \textit{big gap}.
+\begin{multline*}
+1.C4,\ 2.\leftarrow,\ 3.C1,\ 4.\leftarrow,\ 5.C4,\ 6.\leftarrow,\ 7.C4,\ 8.\leftarrow,\ 9.C4,\ 10.\leftarrow,\ 11.C4,\ 12.\leftarrow,\ 13.C4,\nonumber\\ 14.\rightarrow^2,\ (15.\rightarrow,\ 16.\leftarrow.)
+\end{multline*}
+
+A prova de que todas as fun\c{c}\~{o}es recursivas s\~{a}o B-comput\'aveis depende da possibilidade de conseguir todas as fun\c{c}\~{o}es a partir de seis \textit{schemas}. Eles ser\~{a}o definidos a seguir.
+
+\begin{description}
+\item[\textit{Schema (I)}] $\varphi(x) = x + 1.$
+\item[\textit{Schema (II)}] $\varphi(x_1, ..., x_n) = q_i$, $q$ constante.
+\item[\textit{Schema (III)}] $\varphi(x_1, ..., x_n) = x_i$, $i$ constante entre $1, ..., n$.
+\end{description}
+
+\begin{description}
+\item[Prova I] Para provar o \textit{schema} I, deve-se encontrar um programa que encontre o \'ultimo \textit{square} marcado na representa\c{c}\~{a}o do n\'umero $x$, mover seis \textit{squares} para a direita (deixando um \textit{big gap}), copiar o par\^ametro $x$ e depois adicionar 1.
+\end{description}
+
+Subrotina $I_m$: Assumindo que foi obtida esta rotina para c\'opia. Inicia no \textit{square} scaneado, copia nos sucessivos alternados \textit{squares} o $m$-\'esimo numero (contando da direita para a esquerda) que se situa \`a esquerda do \textit{big gap} que precede (\`a esquerda de) o \textit{square} scaneado. Termina \textit{scaneando a entrada}.\\
+
+Subrotina Z : Elimina o \'ultimo \textit{big gap} e deixa a m\'aquina \textit{scaneando a entrada}.
+\begin{center}$Z: 1.H,\ 2.*,\ 3.Y$, ou simplesmente, $H,\ *,\ Y$
+\end{center}
+
+Usando $Z$, $A$, $Y$ e $I_m$ (a ser introduzida formalmente), pode-se provar que todas as fun\c{c}\~{o}es definidas pelos \textit{schemas} I, II e III s\~{a}o B-comput\'aveis.
+\begin{description}
+\item[\textit{(I)}] $Y,\ I_1,\ A,\ Z$
+\item[\textit{(II)}] $Y,\ *,\ A^{q-1},\ Z$, quando $q = 1$, simplesmente $Y,\ *,\ Z$.
+\item[\textit{(III)}] $Y,\ I_{n-i+1},\ Z$.
+\end{description}
+
+Para definir a subrotina $I_m$ precisamos antes definir algumas outras subrotinas, s\~{a}o elas.
+
+Subrotina D: Quando scaneando um P-\textit{square}, encontra e scanea o \'ultimo P-\textit{square} da representa\c{c}\~{a}o num\'erica predecessora mais pr\'oxima. Poder ser repetida para que $D^m$ retorne o \'utimo (marcado) P-\textit{square} da $i$-\'esima (da direita para a esquerda) representa\c{c}\~{a}o num\'erica que precede o \textit{square} scaneado.
+\begin{center}
+$D: 1.C4,\ 2.\leftarrow^2,\ 3.C6,\ 4.\leftarrow^2,\ 5.C1,\ 6.\rightarrow,\ 7.\leftarrow$
+\end{center}
+
+Subrotina G: Encontra dois sucessivos A-\textit{squares} brancos mais pr\'oximos \`a esquerda do \textit{square} scaneado e termina scaneando o P-\textit{square} entre eles.
+\begin{center}
+$G: 1.\rightarrow,\ 2.\leftarrow^2,\ 3.C2,\ 4.\leftarrow^2,\ 5.C2,\ 6.\rightarrow$.
+\end{center}
+
+Subrotina K: Quando scaneando um \textit{square} marcado, encontra o \textit{square} branco mais pr\'oximo \`a esquerda e termina no \textit{square} imediatamente anterior.
+\begin{center}
+$K: 1.C3\ 2.C5,\ 3.\leftarrow,\ 4.C1,\ 5.\leftarrow$.
+\end{center}
+
+Subrotina $M(a)$: Quando scaneando um P-\textit{square}, se ele \'e branco, a m\'aquina vai para a instru\c{c}\~{a}o $a$, se ele \'e marcado, ent\~{a}o scanea o P-\textit{square} imediatamente anterior: se ele \'e branco, ent\~{a}o adiciona 1 ao \'ultimo n\'umero na fita e vai para a instru\c{c}\~{a}o $a$; se ele \'e marcado, encontra e marca o \textit{square} branco mais pr\'oximo \`a sua direita, adiciona 2 ao \'ultimo n\'umero e para.
+\begin{center}
+$M(a): 1.C3,\ 2.Ca,\ 3.\leftarrow^2,\ 4.C6,\ 5.A,\ Ca,\ 6.\rightarrow,\ 7.C6,\ 8.*,\ A^2$.
+\end{center}
+
+Agora a subrotina $I_m$ pode ser definida formalmente.
+\begin{center}
+$I_m: 1.*,\ 2.H,\ \leftarrow,\ D^m,\ G,\ M(4),\ 3.C2,\ 4.Y$
+\end{center}
+
+Com $I_m$, a prova que todas as fun\c{c}\~{o}es definidas pelos \textit{schemas} (I)-(III) s\~{a}o comput\'aveis est\'a completa.
+
+Para provar os outros 3 \textit{schemas} (IV - VI) s\~{a}o necess\'arias mais algumas subrotinas. Elas ser\~{a}o definidas a seguir.
+
+Subrotina $J_m$: Faz uma segunda c\'opia do $m$-\'esimo n\'umero (da direita para a esquerda) para a esquerda do segundo (da direita para a esquerda) \textit{big gap} que precede o \textit{square} scaneado.
+\begin{center}
+$J_m: 1.*,\ H^2,\ \leftarrow,\ D^m,\ \leftarrow^2,\ 2.M(4),\ H^2,\ \leftarrow,\ D^m,\ K,\ 3.C2, 4.Y$
+\end{center}
+
+Para fazer c\'opia de uma secess\~{a}o de representa\c{c}\~{o}es num\'ericas:
+\begin{center}
+$\overline{I}_m: I_m, \leftarrow^2, I_{m-1}, \leftarrow^2, ..., \leftarrow^2, I_1$
+\end{center}
+\begin{center}
+$\overline{J}_m: J_m, \leftarrow^2, J_{m-1}, \leftarrow^2, ..., \leftarrow^2, J_1$
+\end{center}
+
+Para copiar $\overline{J}_m$ omitindo $\leftarrow^2, 1$, a seguinte nota\c{c}\~{a}o \'e usada:
+\begin{center}
+$\overline{J}_m - J_1$
+\end{center}
+
+Subrotina $L_m$: copia $y-1$ em vez de $y$, o $m$-\'esimo numero \`a esquerda do \textit{big gap} mais pr\'oximo que precede o \textit{square} scaneado.
+\begin{center}
+$L_m: 1.*,\ 2.H,\ D^m,\ \leftarrow^2,\ G,\ M(4),\ 3.C2,\ 4.Y$.
+\end{center}
+Difere de $I_m$ na inser\c{c}\~{a}o de $\leftarrow^2$ no passo 2. E \'e aplic\'vel apenas para $y > 1$
+
+\begin{description}
+\item[\textit{Schema (IV)}] Se $\chi_1, ..., \chi_m$ e $\Psi$ s\~{a}o recursivas (resp. B-comput\'aveis), ent\~{a}o a fun\c{c}\~{a}o $\varphi$ definida no \textit{schema} abaixo tamb\'em \'e recursiva (resp. B-comput\'avel).
+\begin{center}
+$\varphi(x_1, ..., x_n) = \Psi[\chi_1(x_1, ..., x_n), ..., \chi_m(x_1, ..., x_m)]$
+\end{center}
+\end{description}
+
+Assumindo que as fun\c{c}\~{o}es $\Psi,\ \chi_1,\ ...,\ \chi_n$ t\^em os respectivos programas $\mathcal{P}(\Psi),\ \mathcal{P}(\chi_1),\\ ...,\mathcal{P}(\chi_m)$. O programa $\mathcal{P}(\varphi)$, intuitivamente \'e dado por:
+
+Copiar os argumentos $x_1, ..., x_n$ 2 vezes, manter a primeira c\'opia \textit{clean} e encontrar o valor de $\chi_m(x_1, ..., x_n)$ com a segunda c\'opia e o programa $\mathcal{P}(\chi_m)$, ent\~{a}o fazer 2 c\'opias da c\'opia \textit{clean} de $x_1, ..., x_n$ e encontrar o valor de $\chi_{m-1}(x_1, ..., x_n)$ com uma c\'opia e o programa  $\mathcal{P}(\chi_{m-1})$. Esses passos s\~{a}o feitos at\'e que se chegue $\chi_1(x_1, ..., x_n)$. Ap\'os estar com todos os par\^ametros $\chi_1(x_1, ..., x_n), ..., \chi_m(x_1, ..., x_m)$ aplica-se o programa $\mathcal{P}(\Psi)$ e teremos o valor de $\varphi(x_1, ..., x_n)$.
+
+Para o caso de $n = 2$ o programa $\mathcal{P}(\Psi)$ \'e dado por:
+$$Y, \overline{I}_n, \overline{J}_n, H^2, *, Y, \mathcal{P}(\chi_2), \leftarrow^3, *, \rightarrow^3, \overline{I}_n, \overline{J}_n, H^2, *, Y, \mathcal{P}(\chi_1), I_1, Z, \leftarrow^2, I_{n+1}, H, *, Y, \mathcal{P}(\Psi)$$
+
+\begin{description}
+\item[\textit{Schema (V)}] 
+$
+\left\{\begin{array}{rrr}
+\varphi(1,\ x_2, ...,\ x_n) & = &\Psi(x_2,\ ...,\ x_n),\\
+\varphi(z+1,\ x_2,\ ...,\ x_n) & = & \chi[z,\ \varphi(z,\ x_2,\ ...,\ x_n),\ x2,\ ...,\ x_n ]
+\end{array}\right.
+$
+\end{description}
+
+Intuitivamente, para encontrar o valor de $\varphi(y,\ x_2, ...,\ x_n)$, para um dado $y$, precisamos calcular o valor de $\mathcal{P}(\chi)$ $y-1$ vezes. Isso \'e realizado efetuando-se testes sucessivos durante a execu\c{c}\~{a}o se $y=1$, $y-1 = 1$ ou $y-2 = 1$ ou etc. Desse modo, $\Psi(x_2,\ ...,\ x_n)$ \'e avaliado por $\mathcal{P}(\Psi)$ e testado se $y=1$. Se $y=1$, $\Psi(x_2,\ ...,\ x_n)$ \'e dado como resposta por $\mathcal{P}(\varphi)$; se $y \neq 1$, $\chi[1,\ \Psi(x_2,\ ...,\ x_n),\ x2,\ ...,\ x_n ]$ \'e calculado e testado se $y-1 = 1$. Se $y-1 \neq 1$, $\chi\{2,\ \chi[1,\ \Psi(x_2,\ ...,\ x_n),\ x2,\ ...,\ x_n ],\ x_2,\ ...,\ x_n \}$ \'e calculado e testado se $y-2=1$. E assim por diante. O programa $\mathcal{P}(\varphi)$ \'e dado por:\\
+
+$1.Y,\ \overline{I}_n,\ \leftarrow^2,\ *,\ \rightarrow^6,\ \overline{J}_{n-1},\ H^2,\ *,\ Y,\ \mathcal{P}(\Psi),\ \leftarrow^2,\ I_{n+1},\ \leftarrow^6,$
+
+$2.\leftarrow^2,\ C4,$
+
+$3.\rightarrow^2,\ C5,$
+
+$4.\rightarrow^6,\ \overline{I}_n,\ A,\ Y,\ L_1,\ I_{n+2},\ \overline{J}_n - J_1,\ H^2,\ *,\ Y,\ \mathcal{P}(\chi),\ \leftarrow^2,\ L_{n+1},\ \leftarrow^6,\ C2,$
+
+$5.\rightarrow^4,\ I_2,\ Z.$
+
+\begin{description}
+\item[Schema (VI)] $\varphi(x_1, ..., x_n) = \mu_y[\chi(x_1, ..., x_n, y) = 1]$
+\end{description}
+
+A constru\c{c}\~{a}o de $\mathcal{P}(\varphi)$ a partir de $\mathcal{P}(\chi)$ \'e similar ao caso do \textit{schema (V)}. Para quaisquer $x_1, ..., x_n$, verifica-se se $\chi(x_1, ..., x_n, 1)$ \'e igual a $1$, se for igual a $1$, para a execu\c{c}\~{a}o; se n\~{a}o for $1$, $\chi(x_1, ..., x_n, 2)$ \'e avaliado, e assim por diante.
+O programa $\mathcal{P}(\varphi)$ \'e dado por:\\
+
+$1.Y,\ \overline{I}_n,\ \leftarrow^2,\ *,\ \rightarrow^6,\ \overline{J}_n,\ \leftarrow^2,\ *,$
+
+$2.H^2,\ *,\ \mathcal{P}(\chi),\ \leftarrow^3,\ *,\ \leftarrow^8,\ C4,$
+
+$3.\rightarrow^2,\ C5,$
+
+$4.\rightarrow^6,\ \overline{I}_{n+1},\ A,\ \rightarrow^6,\ \overline{J}_{n+1},\ A,\ C2,$
+
+$5.\rightarrow^4,\ I_1,\ Z.$\\
+
+Isto completa a prova do teorema todas as fun\c{c}\~{o}es recursivas s\~{a}o B-comput\'aveis.\\
+
+Utilizando a prova anterior e o que foi mostrado em \cite{Sudkamp} e \cite{Blauth}, que toda fun\c{c}\~{a}o recursiva \'e Turing Comput\'avel e que toda fun\c{c}\~{a}o Turing Comput\'avel \'e recursiva. Fica demonstrada a equival\^encia entre Turing-Computabilidade e B-Computabilidade.
+
+
+\renewcommand{\refname}{Refer\^encias}
+\bibliography{biblio}
+
+
+Este trabalho foi feito tomando como base o artigo \cite{Wang}, dispon\'ivel em:\\ http://portal.acm.org/citation.cfm?id=320856.320867
+
+
+\end{document}
+
+
+ 
